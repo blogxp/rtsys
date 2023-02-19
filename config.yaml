@@ -33,7 +33,7 @@ database:
     port: "3306"
     user: "root"
     password: ""
-    db-name: "b5prepare"
+    db-name: ""
     charset: "utf8mb4"
   test:
     driver: "mysql"
@@ -41,7 +41,7 @@ database:
     port: "3306"
     user: "root"
     password: ""
-    db-name: "b5prepare"
+    db-name: ""
     charset: "utf8mb4"
 
 #redis配置
