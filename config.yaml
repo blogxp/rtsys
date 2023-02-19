@@ -32,16 +32,16 @@ database:
     host: "127.0.0.1"
     port: "3306"
     user: "root"
-    password: ""
-    db-name: ""
+    password: "wxp0719@CTBU"
+    db-name: "b5prepare"
     charset: "utf8mb4"
   test:
     driver: "mysql"
     host: "127.0.0.1"
     port: "3306"
     user: "root"
-    password: ""
-    db-name: ""
+    password: "wxp0719@CTBU"
+    db-name: "b5prepare"
     charset: "utf8mb4"
 
 #redis配置
