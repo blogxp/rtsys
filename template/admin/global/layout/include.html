@@ -1,0 +1,132 @@
+{{define "header"}}
+<title>RTSys</title>
+<meta charset="UTF-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link href="/static/admin/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="/static/admin/plugins/fontawesome/css/font-awesome.min.css" rel="stylesheet"/>
+<link href="/static/admin/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet"/>
+<link href="/static/admin/plugins/layui/css/layui.css" rel="stylesheet">
+<link href="/static/admin/plugins/animate/animate.css" rel="stylesheet"/>
+<link href="/static/admin/css/skins.css" rel="stylesheet"/>
+<link href="/static/admin/css/iframe-ui.css" rel="stylesheet"/>
+<script type="text/javascript" src="/static/admin/plugins/jquery/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="/static/admin/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script>
+    window.b5go = {
+        oasUrl:"{{._controller_}}/add",
+        oesUrl:"{{._controller_}}/edit",
+        upImgUrl:"{{._root_}}/common/upload_img",
+        upFileUrl:"{{._root_}}/common/upload_file",
+        upVideoUrl:"{{._root_}}/common/upload_video",
+        bootUrl:{
+            url: "{{._controller_}}/index",
+            createUrl: "{{._controller_}}/add?id=%id%",
+            updateUrl: "{{._controller_}}/edit?id=%id%",
+            removeUrl: "{{._controller_}}/drop",
+            removeAllUrl: "{{._controller_}}/drop_all",
+            clearCacheUrl: "{{._controller_}}/del_cache",
+            statusUrl:"{{._controller_}}/set_status",
+            downUrl:"{{._root_}}/public/download",
+        }
+    }
+</script>
+{{end}}
+
+{{define "css_cover"}}
+<link href="/static/admin/css/style.css" rel="stylesheet"/>
+{{end}}
+{{define "js_before"}}
+<script type="text/javascript" src="/static/admin/plugins/qs/qs.min.js"></script>
+<script type="text/javascript" src="/static/admin/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script type="text/javascript" src="/static/admin/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+<script type="text/javascript" src="/static/admin/plugins/bootstrap-table/extensions/mobile/bootstrap-table-mobile.min.js"></script>
+<!-- jquery-validate 表单验证插件 -->
+<script type="text/javascript" src="/static/admin/plugins/validate/jquery.validate.min.js"></script>
+<script type="text/javascript" src="/static/admin/plugins/validate/messages_zh.min.js"></script>
+<script type="text/javascript" src="/static/admin/plugins/validate/jquery.validate.extend.js"></script>
+<script type="text/javascript" src="/static/admin/plugins/blockUI/jquery.blockUI.js"></script>
+<script type="text/javascript" src="/static/admin/plugins/iCheck/icheck.min.js"></script>
+{{end}}
+{{define "js_after"}}
+<script type="text/javascript" src="/static/admin/plugins/layui/layui.js"></script>
+<script type="text/javascript" src="/static/admin/js/iframe-ui.js"></script>
+<script type="text/javascript" src="/static/admin/js/common.js"></script>
+{{end}}
+
+{{define "treetable"}}
+<script type="text/javascript" src="/static/admin/plugins/bootstrap-treetable/bootstrap-treetable.js"></script>
+{{end}}
+
+{{define "ztree"}}
+<link href="/static/admin/plugins/ztree/css/metroStyle/metroStyle.css" rel="stylesheet"/>
+<script type="text/javascript" src="/static/admin/plugins/ztree/js/jquery.ztree.all.min.js"></script>
+<script type="text/javascript" src="/static/admin/plugins/ztree/js/jquery.ztree.exhide.min.js"></script>
+{{end}}
+
+{{define "summernote"}}
+<link href="/static/admin/plugins/summernote/summernote.min.css" rel="stylesheet"/>
+<script type="text/javascript" src="/static/admin/plugins/summernote/summernote.min.js"></script>
+<script type="text/javascript" src="/static/admin/plugins/summernote/lang/summernote-zh-CN.min.js"></script>
+{{end}}
+
+{{define "select2"}}
+<link href="/static/admin/plugins/select2/select2.min.css" rel="stylesheet"/>
+<link href="/static/admin/plugins/select2/select2-bootstrap.css" rel="stylesheet"/>
+<script type="text/javascript" src="/static/admin/plugins/select2/select2.js"></script>
+{{end}}
+
+{{define "jquery-layout"}}
+<link href="/static/admin/plugins/jquery-layout/layout-default.css" rel="stylesheet"/>
+<script type="text/javascript" src="/static/admin/plugins/jquery-layout/jquery.layout.min.js"></script>
+{{end}}
+
+{{define "dragula"}}
+<link href="/static/admin/plugins/dragula/dragula.min.css" rel="stylesheet"/>
+<script type="text/javascript" src="/static/admin/plugins/dragula/dragula.min.js"></script>
+{{end}}
+
+{{define "viewer"}}
+<link href="/static/admin/plugins/viewerjs/viewer.min.css" rel="stylesheet"/>
+<script type="text/javascript" src="/static/admin/plugins/viewerjs/viewer.min.js"></script>
+{{end}}
+
+{{define "cropper"}}
+<link href="/static/admin/plugins/cropper/cropper.min.css" rel="stylesheet"/>
+<script type="text/javascript" src="/static/admin/plugins/cropper/cropper.min.js"></script>
+<script type="text/javascript" src="/static/admin/plugins/cropper/jquery-cropper.min.js"></script>
+{{end}}
+
+{{define "export"}}
+<script type="text/javascript" src="/static/admin/plugins/bootstrap-table/extensions/export/tableExport.js"></script>
+<script type="text/javascript" src="/static/admin/plugins/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+{{end}}
+
+{{define "mypicker"}}
+<script type="text/javascript" src="/static/admin/plugins/My97DatePicker/WdatePicker.js"></script>
+{{end}}
+
+{{define "echarts"}}
+<script type="text/javascript" src="/static/admin/plugins/echarts/echarts.min.js"></script>
+{{end}}
+
+{{define "vue"}}
+<script type="text/javascript" src="/static/admin/plugins/vue/vue.min.js"></script>
+{{end}}
+
+{{define "dayjs"}}
+<script type="text/javascript" src="/static/admin/plugins/dayjs/dayjs.min.js"></script>
+{{end}}
+
+{{define "beautifyhtml"}}
+<script type="text/javascript" src="/static/admin/plugins/beautifyhtml/beautifyhtml.js"></script>
+{{end}}
+
+{{define "jquery-ui"}}
+<script type="text/javascript" src="/static/admin/plugins/jquery-ui-1.10.4.min.js"></script>
+{{end}}
+
+{{define "uploader"}}
+<script type="text/javascript" src="/static/admin/plugins/uploader.js"></script>
+{{end}}

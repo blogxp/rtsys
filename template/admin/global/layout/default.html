@@ -1,0 +1,21 @@
+{{define "layout_default"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {{block "header" .}}{{end}}
+</head>
+<body class="gray-bg" style="display: none">
+<div class="container-div">
+  <div class="row">
+    {{block "content" .}}{{end}}
+  </div>
+</div>
+{{block "js_before" .}}{{end}}
+{{block "js_common" .}}{{end}}
+{{block "css_cover" .}}{{end}}
+{{block "js_after" .}}{{end}}
+
+{{block "script" .}}{{end}}
+</body>
+</html>
+{{end}}

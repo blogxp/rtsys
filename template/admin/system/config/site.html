@@ -1,0 +1,99 @@
+{{define "system/config/site"}}
+    {{template "layout_default" .}}
+{{end}}
+
+{{define "content"}}
+<style>
+    .nav-tabs > li > a {
+        color: #999;
+        font-weight: 500;
+        padding: 6px 18px 6px 20px;
+    }
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+        color: #000;
+    }
+</style>
+<div class="mt10" style="background-color: #fff;padding: 10px">
+    <div class="bs-example bs-example-tabs b5navtab" data-example-id="togglable-tabs">
+        <ul class="nav nav-tabs" role="tablist">
+            {{range $gk,$gv := .groups}}
+            <li role="presentation">
+                <a href="#{{$gv.key}}" id="{{$gv.key}}-tab" role="tab" data-toggle="tab" aria-controls="{{$gv.key}}" aria-expanded="true">{{$gv.name}}</a>
+            </li>
+            {{end}}
+        </ul>
+        <div class="tab-content mt20">
+            {{range $gk,$gv := .groups}}
+            <div role="tabpanel" class="tab-pane fade" id="{{$gv.key}}" aria-labelledby="{{$gv.key}}-tab">
+                <form class="form-horizontal" id="form-config-site-{{$gv.key}}">
+                    {{range $index,$input := $gv.child}}
+                        {{if eq $input.style "text"}}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{$input.title}}：</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="where[{{$input.id}}]" value="{{$input.value}}" class="form-control"
+                                       autocomplete="off">
+                                {{if ne $input.note ""}}
+                                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> {{$input.note}}</span>
+                                {{end}}
+                            </div>
+                        </div>
+                        {{end}}
+                        {{if eq $input.style "textarea"}}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{$input.title}}：</label>
+                            <div class="col-sm-9">
+                                <textarea rows="3" name="where[{{$input.id}}]" class="form-control">{{$input.value}}</textarea>
+                                {{if ne $input.note ""}}
+                                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> {{$input.note}}</span>
+                                {{end}}
+                            </div>
+                        </div>
+                        {{end}}
+                        {{if eq $input.style "select"}}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{$input.title}}：</label>
+                            <div class="col-sm-9">
+                                <select name="where[{{$input.id}}]" class="form-control">
+                                    {{range $sk,$sv := $input.extra}}
+                                        <option value="{{$sv.Key}}" {{if eq $input.value $sv.Key}} selected {{end}}>{{$sv.Value}}</option>
+                                    {{end}}
+                                </select>
+                                {{if ne $input.note ""}}
+                                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> {{$input.note}}</span>
+                                {{end}}
+                            </div>
+                        </div>
+                        {{end}}
+                        {{if eq $input.style "array"}}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{$input.title}}：</label>
+                            <div class="col-sm-9">
+                                <textarea rows="3" name="where[{{$input.id}}]" class="form-control">{{$input.value}}</textarea>
+                                {{if ne $input.note ""}}
+                                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> {{$input.note}}</span>
+                                {{end}}
+                            </div>
+                        </div>
+                        {{end}}
+                    {{end}}
+                    <div class="form-group text-center mt20">
+                        <a href="javascript:;" class="btn btn-success btn-mid b5submit_btn"
+                           data-target="form-config-site-{{$gv.key}}" data-title="确定提交网站配置信息">保存</a>
+                    </div>
+                </form>
+            </div>
+            {{end}}
+        </div>
+    </div>
+</div>
+{{end}}
+
+{{define "script"}}
+<script>
+    $(function (){
+        $(".nav-tabs li").eq(0).addClass("active")
+        $(".tab-content .tab-pane").eq(0).addClass("active in")
+    })
+</script>
+{{end}}

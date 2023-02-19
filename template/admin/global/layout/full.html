@@ -1,0 +1,16 @@
+{{define "layout_full"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {{block "header" .}}{{end}}
+</head>
+<body class="gray-bg" style="display: none">
+{{block "content" .}}{{end}}
+{{block "js_before" .}}{{end}}
+{{block "js_common" .}}{{end}}
+{{block "css_cover" .}}{{end}}
+{{block "js_after" .}}{{end}}
+{{block "script" .}}{{end}}
+</body>
+</html>
+{{end}}

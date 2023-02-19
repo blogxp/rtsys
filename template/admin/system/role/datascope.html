@@ -1,0 +1,109 @@
+{{define "system/role/datascope"}}
+    {{template "layout_form" .}}
+{{end}}
+
+{{define "js_common"}}
+    {{block "ztree" .}}{{end}}
+{{end}}
+
+{{define "content"}}
+<form class="form-horizontal m" id="form-add">
+    <input type="hidden" name="id" value="{{.info.Id}}">
+    <input type="hidden" name="tree_id" id="treeId" value="{{.structList}}">
+    <div class="form-group">
+        <label class="col-sm-3 control-label">角色名称：</label>
+        <div class="col-sm-8">
+            <div class="form-control-static">{{.info.Name}}</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">角色标识：</label>
+        <div class="col-sm-8">
+            <div class="form-control-static">{{.info.RoleKey}}</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">数据范围：</label>
+        <div class="col-sm-8">
+            <select name="data_scope" id="data_scope_select" class="form-control">
+                <option value="0">无</option>
+                {{range $index,$item := .typeList}}
+                    <option value="{{$item.Key}}" {{if eq $.info.DataScope $item.Key}} selected {{end}}>{{$item.Value}}</option>
+                {{end}}
+            </select>
+        </div>
+    </div>
+    <div class="form-group" id="customData">
+        <label class="col-sm-3 control-label">数据权限：</label>
+        <div class="col-sm-8">
+            <label class="check-box">
+                <input type="checkbox" value="1" class="treeOpClass">展开/折叠</label>
+            <label class="check-box">
+                <input type="checkbox" value="2" class="treeOpClass">全选/全不选</label>
+            <label class="check-box">
+                <input type="checkbox" value="3" class="treeOpClass">父子联动</label>
+            <div id="menuTrees" class="ztree ztree-border"></div>
+        </div>
+    </div>
+</form>
+{{end}}
+
+{{define "script"}}
+    <script>
+        $(function() {
+            dataScopeChange();
+            $("#data_scope_select").change(function (){
+                dataScopeChange();
+            });
+            initTree()
+
+        });
+
+        function initTree(){
+            var options = {
+                id: "menuTrees",
+                url: "{{._group_}}/struct/tree",
+                ismult:true,
+                childparent:false,
+                expandLevel: 2,
+            };
+            $.tree.init(options);
+            $('input.treeOpClass').on('ifChanged', function(obj){
+                var type = $(this).val();
+                var checked = obj.currentTarget.checked;
+                if (type == 1) {
+                    if (checked) {
+                        $._tree.expandAll(true);
+                    } else {
+                        $._tree.expandAll(false);
+                    }
+                } else if (type == "2") {
+                    if (checked) {
+                        $._tree.checkAllNodes(true);
+                        $.tree.zOnCheck();
+                    } else {
+                        $._tree.checkAllNodes(false);
+                        $.tree.zOnCheck();
+                    }
+                } else if (type == "3") {
+                    if (checked) {
+                        $._tree.setting.check.chkboxType = { "Y": "ps", "N": "ps" };
+                    } else {
+                        $._tree.setting.check.chkboxType = { "Y": "", "N": "" };
+                    }
+                }
+            })
+        }
+        function dataScopeChange(){
+            var val = $("#data_scope_select").val()
+            if(val=='8'){
+                $("#customData").show()
+            }else{
+                $("#customData").hide()
+            }
+        }
+        function submitHandler() {
+            $.operate.save("{{._controller_}}/data_scope", $('#form-add').serialize());
+        }
+    </script>
+{{end}}

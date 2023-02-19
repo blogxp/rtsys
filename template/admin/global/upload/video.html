@@ -1,0 +1,65 @@
+{{define "upload_video"}}
+{{/* 默认配置
+    name 表单input的name值
+    title 上传按钮文字
+    exts 允许上传文件后缀
+    tips 上传提示
+    multi 上传数量
+    cat 保存分组
+    data 图片列表 字符串以,隔开
+*/}}
+{{$_video_upload_name := call .ctx.func.mapValue "name" . ""}}
+{{$_video_upload_title := call .ctx.func.mapValue "title" . "本地上传"}}
+{{$_video_upload_exts := call .ctx.func.mapValue "exts" . ""}}
+{{$_video_upload_tips := call .ctx.func.mapValue "tips" . ""}}
+{{$_video_upload_cat := call .ctx.func.mapValue "cat" . ""}}
+{{$_video_upload_data := call .ctx.func.mapValue "data" . ""}}
+{{$_video_upload_place := call .ctx.func.mapValue "place" . ""}}
+
+<div style="display:flex;align-items: center;justify-content: flex-start">
+    <button type="button" class="btn btn-primary btn-sm" id="videobtn_{{$_video_upload_name}}" style="flex-shrink: 0"><i class="fa fa-video-camera"></i> {{$_video_upload_title}}</button>
+    &nbsp;&nbsp;
+    <input type="text" id="videourl_{{$_video_upload_name}}" class="form-control videourl_input" name="{{$_video_upload_name}}" placeholder="{{$_video_upload_place}}"  value="{{$_video_upload_data}}" readonly>
+    <a style="flex-shrink: 0" href="javascript:;" id="videoshow_{{$_video_upload_name}}" data-url="{{ call .ctx.func.fileDomain $_video_upload_data}}">&nbsp;查看</a>
+</div>
+
+{{if ne $_video_upload_tips ""}}
+<span class="help-block m-b-none"><i class="fa fa-info-circle"></i> {{$_video_upload_tips}}</span>
+{{end}}
+<script>
+    $(function () {
+        layui.use("upload", function(){
+            var upload = layui.upload;
+            //执行实例
+            upload.render({
+                elem: "#videobtn_{{$_video_upload_name}}"
+                ,url: window.b5go.upVideoUrl
+                ,field:"file"
+                ,multiple:false
+                ,number:1
+                ,data:{cat:"{{$_video_upload_cat}}"}
+                ,exts:"{{$_video_upload_exts}}"
+                ,accept:"video"
+                // ,acceptMime:"video/mp4"
+                ,done: function(res){
+                    if(res.success && res.code===0){
+                        $("#videourl_{{$_video_upload_name}}").val(res.data.path);
+                        $("#videoshow_{{$_video_upload_name}}").data("url",res.data.url);
+                    }else{
+                        $.modal.msgError(res.msg)
+                    }
+                }
+                ,error: function(){
+                    $.modal.msgWarning("网络连接错误")
+                }
+            });
+        });
+        $("#videoshow_{{$_video_upload_name}}").click(function () {
+            var url = $(this).data('url')
+            if(url){
+                window.open(url)
+            }
+        });
+    });
+</script>
+{{end}}

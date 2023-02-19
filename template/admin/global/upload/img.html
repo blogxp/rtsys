@@ -1,0 +1,80 @@
+{{define "upload_img"}}
+
+{{/* 默认配置
+    name 表单input的name值
+    title 上传按钮文字
+    link 是否显示外链输入框 0 1
+    tips 上传提示
+    exts 允许上传文件后缀
+    multi 上传数量
+    crop 是否开启裁剪
+    cat 图片分组
+    width 图片最大宽度
+    height 图片最大高度
+    data 图片列表 字符串以,隔开
+*/}}
+
+{{$_img_upload_name := call .ctx.func.mapValue "name" . ""}}
+{{$_img_upload_title := call .ctx.func.mapValue "title" . "上传图片"}}
+{{$_img_upload_exts := call .ctx.func.mapValue "exts" . ""}}
+{{$_img_upload_link := call .ctx.func.mapValue "link" . "0"}}
+{{$_img_upload_tips := call .ctx.func.mapValue "tips" . ""}}
+{{$_img_upload_multi := call .ctx.func.mapValue "multi" . "1"}}
+{{$_img_upload_crop := call .ctx.func.mapValue "crop" . "0"}}
+{{$_img_upload_cat := call .ctx.func.mapValue "cat" . ""}}
+{{$_img_upload_width := call .ctx.func.mapValue "width" . ""}}
+{{$_img_upload_height := call .ctx.func.mapValue "height" . ""}}
+{{$_img_upload_data := call .ctx.func.mapValue "data" . ""}}
+
+<div class="b5uploadmainbox b5uploadimgbox" data-type="img">
+    <button type="button" class="btn-b5upload btn btn-primary btn-sm" id="{{$_img_upload_name}}" data-multi="{{$_img_upload_multi}}" data-exts="{{$_img_upload_exts}}" data-height="{{$_img_upload_height}}" data-width="{{$_img_upload_width}}" data-cat="{{$_img_upload_cat}}"><i class="fa fa-image"></i>{{$_img_upload_title}}</button>
+    {{if eq $_img_upload_link "1"}}
+    或 <div class="uploadimg_link">
+    <input type="text" class="form-control" id="{{$_img_upload_name}}_link" />
+    <a href="javascript:;" class="btn btn-primary btn-sm" id="{{$_img_upload_name}}_linkbtn"><i class="fa fa-link"></i>添加</a>
+</div>
+    {{end}}
+
+    {{if ne $_img_upload_tips ""}}
+    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> {{$_img_upload_tips}}</span>
+    {{end}}
+
+    <div class="b5uploadlistbox {{$_img_upload_name}}_imglist" id="{{$_img_upload_name}}_imglist"></div>
+</div>
+
+<script>
+    $(function () {
+        {{if eq $_img_upload_link "1"}}
+        //显示外链操作框
+        b5uploadImgLink("{{$_img_upload_name}}");
+        {{end}}
+
+        {{if eq $_img_upload_crop "1"}}
+        //打开裁剪页面
+        $("#{{$_img_upload_name}}").click(function () {
+            var url = "{{.ctx._root_}}/common/cropper";
+            var params = "id={{$_img_upload_name}}&cat={{$_img_upload_cat}}";
+            url = urlcreate(url,params);
+            $.modal.open("上传裁剪图片",url);
+        });
+        {{else}}
+        //上传初始化
+        b5uploadimginit("{{$_img_upload_name}}");
+        {{end}}
+
+        {{if ne $_img_upload_multi "1"}}
+        //多图拖拽排序
+        dragula([document.getElementById("{{$_img_upload_name}}_imglist")]);
+        {{end}}
+
+        {{if ne $_img_upload_data ""}}
+        //显示图片列表
+        {{$_img_upload_data_list := call .ctx.func.split $_img_upload_data ","}}
+        {{range $index,$item := $_img_upload_data_list}}
+            {{$_img_data_path := call $.ctx.func.fileDomain $item}}
+            b5uploadhtmlshow("{{$_img_upload_name}}",b5uploadimghtml("{{$item}}","{{$_img_upload_name}}","{{$_img_data_path}}"))
+        {{end}}
+        {{end}}
+    });
+</script>
+{{end}}

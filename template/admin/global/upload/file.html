@@ -1,0 +1,66 @@
+{{define "upload_file"}}
+
+{{/* 默认配置
+    name 表单input的name值
+    title 上传按钮文字
+    exts 允许上传文件后缀
+    inputname 是否显示文件名称输入框
+    link 是否显示外链输入框 0 1
+    tips 上传提示
+    multi 上传数量
+    cat 保存分组
+    data 图片列表 字符串以,隔开
+*/}}
+
+{{$_file_upload_name := call .ctx.func.mapValue "name" . ""}}
+{{$_file_upload_title := call .ctx.func.mapValue "title" . "上传文件"}}
+{{$_file_upload_link := call .ctx.func.mapValue "link" . "0"}}
+{{$_file_upload_exts := call .ctx.func.mapValue "exts" . ""}}
+{{$_file_upload_tips := call .ctx.func.mapValue "tips" . ""}}
+{{$_file_upload_multi := call .ctx.func.mapValue "multi" . "1"}}
+{{$_file_upload_cat := call .ctx.func.mapValue "cat" . ""}}
+{{$_file_upload_inputname := call .ctx.func.mapValue "inputname" . "0"}}
+{{$_file_upload_data := call .ctx.func.mapValue "data" . ""}}
+
+<div class="b5uploadmainbox b5uploadfilebox" data-type="file">
+    <button type="button" class="btn-b5upload btn btn-primary btn-sm" id="{{$_file_upload_name}}" data-exts="{{$_file_upload_exts}}"  data-multi="{{$_file_upload_multi}}"  data-cat="{{$_file_upload_cat}}" data-inputname="{{$_file_upload_inputname}}"><i class="fa fa-upload"></i> {{$_file_upload_title}}</button>
+
+    {{if eq $_file_upload_link "1"}}
+    或 <div class="uploadimg_link">
+        <input type="text" id="{{$_file_upload_name}}_link" class="form-control" value=""><a href="javascript:;" class="btn btn-primary btn-sm" id="{{$_file_upload_name}}_linkbtn"><i class="fa fa-link"></i>添加</a>
+    </div>
+    {{end}}
+
+    {{if ne $_file_upload_tips ""}}
+    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> {{$_file_upload_tips}}</span>
+    {{end}}
+
+    <div class="b5uploadlistbox {{$_file_upload_name}}_filelist" id="{{$_file_upload_name}}_filelist"></div>
+</div>
+<script>
+    $(function () {
+        b5uploadfileinit("{{$_file_upload_name}}");
+        {{if eq $_file_upload_link "1"}}
+        //显示外链操作框
+            b5uploadImgLink("{{$_file_upload_name}}");
+        {{end}}
+
+        {{if ne $_file_upload_multi "1"}}
+        //多图拖拽排序
+        dragula([document.getElementById("{{$_file_upload_name}}_filelist")]);
+        {{end}}
+
+
+        {{if ne $_file_upload_data ""}}
+        //显示文件列表
+        {{$_file_upload_data_list := call .ctx.func.split $_file_upload_data ","}}
+        {{range $index,$item := $_file_upload_data_list}}
+        {{if ne $item ""}}
+            {{$_file_data_path := call $.ctx.func.fileDomain $item}}
+            b5uploadhtmlshow("{{$_file_upload_name}}",b5uploadfilehtml("{{$item}}","{{$_file_upload_name}}","{{$_file_data_path}}"))
+        {{end}}
+        {{end}}
+        {{end}}
+    });
+</script>
+{{end}}

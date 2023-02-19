@@ -1,0 +1,56 @@
+system:
+  name: "RTsys"
+  version: "1.0"
+
+#路由相关
+route:
+  admin: "/admin" #后台路由访问前缀 最后不能带有/
+  api: "/api" #接口访问前缀 最后不能带有/
+  auto-admin: true
+
+#服务器相关
+server:
+  domain: "http://127.0.0.1"  #外网访问域名 最后不带/
+  port: "8080"
+  oss-domain: ""  #文件访问域名 最后不带/  留空取domain
+  oss-type: "local"
+  worker-id: 1
+  debug: true
+  net-writer: true
+  db-show-sql: true
+
+#上传配置相关
+oss:
+  local:  #修改后记得去router/base.go 修改静态解析
+    call-path: "/uploads/"  #访问的前缀
+    store-path: "static/uploads/"  #存储路径
+
+#数据库配置
+database:
+  default:
+    driver: "mysql"
+    host: "127.0.0.1"
+    port: "3306"
+    user: "root"
+    password: ""
+    db-name: ""
+    charset: "utf8mb4"
+  test:
+    driver: "mysql"
+    host: "127.0.0.1"
+    port: "3306"
+    user: "root"
+    password: ""
+    db-name: ""
+    charset: "utf8mb4"
+
+#redis配置
+redis:
+  default:
+    host: "127.0.0.1"
+    port: "6379"
+    password: ""
+    database: 0
+
+
+
